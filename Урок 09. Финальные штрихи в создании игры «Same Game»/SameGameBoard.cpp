@@ -20,27 +20,27 @@ CSameGameBoard::CSameGameBoard(void)
 	m_arrColors[6] = RGB(255, 0, 128);
 	m_arrColors[7] = RGB(0, 64, 0);
 
-	//  Создание доски и задание первоначальных параметров 
+	//  РЎРѕР·РґР°РЅРёРµ РґРѕСЃРєРё Рё Р·Р°РґР°РЅРёРµ РїРµСЂРІРѕРЅР°С‡Р°Р»СЊРЅС‹С… РїР°СЂР°РјРµС‚СЂРѕРІ 
 	SetupBoard();
 }
 
 CSameGameBoard::CSameGameBoard(const CSameGameBoard& board)
 {
-	//  Копирование всех элементов класса
+	//  РљРѕРїРёСЂРѕРІР°РЅРёРµ РІСЃРµС… СЌР»РµРјРµРЅС‚РѕРІ РєР»Р°СЃСЃР°
 	m_nColumns = board.m_nColumns;
 	m_nRows = board.m_nRows;
 	m_nHeight = board.m_nHeight;
 	m_nWidth = board.m_nWidth;
 	m_nRemaining = board.m_nRemaining;
 	m_nColors = board.m_nColors;
-	// Копирование цветовых элементов
+	// РљРѕРїРёСЂРѕРІР°РЅРёРµ С†РІРµС‚РѕРІС‹С… СЌР»РµРјРµРЅС‚РѕРІ
 	for (int i = 0; i < 8; i++)
 		m_arrColors[i] = board.m_arrColors[i];
 	m_arrBoard = NULL;
 
-	//  Создание новой доски
+	//  РЎРѕР·РґР°РЅРёРµ РЅРѕРІРѕР№ РґРѕСЃРєРё
 	CreateBoard();
-	//  Копирование контента игровой доски
+	//  РљРѕРїРёСЂРѕРІР°РЅРёРµ РєРѕРЅС‚РµРЅС‚Р° РёРіСЂРѕРІРѕР№ РґРѕСЃРєРё
 	for (int row = 0; row < m_nRows; row++)
 		for (int col = 0; col < m_nColumns; col++)
 			m_arrBoard[row][col] = board.m_arrBoard[row][col];
@@ -49,26 +49,26 @@ CSameGameBoard::CSameGameBoard(const CSameGameBoard& board)
 
 CSameGameBoard::~CSameGameBoard(void)
 {
-	//  Просто удаляем нашу доску
+	//  РџСЂРѕСЃС‚Рѕ СѓРґР°Р»СЏРµРј РЅР°С€Сѓ РґРѕСЃРєСѓ
 	DeleteBoard();
 }
 
 void CSameGameBoard::SetupBoard(void)
 {
-	//  При необходимости создаём доску
+	//  РџСЂРё РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚Рё СЃРѕР·РґР°С‘Рј РґРѕСЃРєСѓ
 	if (m_arrBoard == NULL)
 		CreateBoard();
-	//  Устанавливаем каждому блоку случайный цвет 
+	//  РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РєР°Р¶РґРѕРјСѓ Р±Р»РѕРєСѓ СЃР»СѓС‡Р°Р№РЅС‹Р№ С†РІРµС‚ 
 	for (int row = 0; row < m_nRows; row++)
 		for (int col = 0; col < m_nColumns; col++)
 			m_arrBoard[row][col] = (rand() % m_nColors) + 1;
-	//  Устанавливаем каждому блоку случайный цвет
+	//  РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РєР°Р¶РґРѕРјСѓ Р±Р»РѕРєСѓ СЃР»СѓС‡Р°Р№РЅС‹Р№ С†РІРµС‚
 	m_nRemaining = m_nRows * m_nColumns;
 }
 
 COLORREF CSameGameBoard::GetBoardSpace(int row, int col)
 {
-	//  Проверяем границы массива
+	//  РџСЂРѕРІРµСЂСЏРµРј РіСЂР°РЅРёС†С‹ РјР°СЃСЃРёРІР°
 	if (row < 0 || row >= m_nRows || col < 0 || col >= m_nColumns)
 		return m_arrColors[0];
 	return m_arrColors[m_arrBoard[row][col]];
@@ -83,12 +83,12 @@ void CSameGameBoard::DeleteBoard(void)
 		{
 			if (m_arrBoard[row] != NULL)
 			{
-				//  Сначала удаляем каждую отдельную строку
+				//  РЎРЅР°С‡Р°Р»Р° СѓРґР°Р»СЏРµРј РєР°Р¶РґСѓСЋ РѕС‚РґРµР»СЊРЅСѓСЋ СЃС‚СЂРѕРєСѓ
 				delete[] m_arrBoard[row];
 				m_arrBoard[row] = NULL;
 			}
 		}
-		//  В конце удаляем массив, содержащий строки
+		//  Р’ РєРѕРЅС†Рµ СѓРґР°Р»СЏРµРј РјР°СЃСЃРёРІ, СЃРѕРґРµСЂР¶Р°С‰РёР№ СЃС‚СЂРѕРєРё
 		delete[] m_arrBoard;
 		m_arrBoard = NULL;
 	}
@@ -96,16 +96,16 @@ void CSameGameBoard::DeleteBoard(void)
 
 void CSameGameBoard::CreateBoard(void)
 {
-	//  Если у нас осталась доска с предыдущего раза, то удаляем её  
+	//  Р•СЃР»Рё Сѓ РЅР°СЃ РѕСЃС‚Р°Р»Р°СЃСЊ РґРѕСЃРєР° СЃ РїСЂРµРґС‹РґСѓС‰РµРіРѕ СЂР°Р·Р°, С‚Рѕ СѓРґР°Р»СЏРµРј РµС‘  
 	if (m_arrBoard != NULL)
 		DeleteBoard();
-	//  Создаём массив для хранения строк
+	//  РЎРѕР·РґР°С‘Рј РјР°СЃСЃРёРІ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ СЃС‚СЂРѕРє
 	m_arrBoard = new int*[m_nRows];
-	//  Создаём отдельно каждую строку
+	//  РЎРѕР·РґР°С‘Рј РѕС‚РґРµР»СЊРЅРѕ РєР°Р¶РґСѓСЋ СЃС‚СЂРѕРєСѓ
 	for (int row = 0; row < m_nRows; row++)
 	{
 		m_arrBoard[row] = new int[m_nColumns];
-		//  Устанавливаем для каждого блока значение цвета равное цвету фона
+		//  РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РґР»СЏ РєР°Р¶РґРѕРіРѕ Р±Р»РѕРєР° Р·РЅР°С‡РµРЅРёРµ С†РІРµС‚Р° СЂР°РІРЅРѕРµ С†РІРµС‚Сѓ С„РѕРЅР°
 		for (int col = 0; col < m_nColumns; col++)
 			m_arrBoard[row][col] = 0;
 	}
@@ -113,14 +113,14 @@ void CSameGameBoard::CreateBoard(void)
 
 int CSameGameBoard::DeleteBlocks(int row, int col)
 {
-	//  Проверяем на валидность индексы ячейки и столбца
+	//  РџСЂРѕРІРµСЂСЏРµРј РЅР° РІР°Р»РёРґРЅРѕСЃС‚СЊ РёРЅРґРµРєСЃС‹ СЏС‡РµР№РєРё Рё СЃС‚РѕР»Р±С†Р°
 	if (row < 0 || row >= m_nRows || col < 0 || col >= m_nColumns)
 		return -1;
-	//  Если блок уже имеет цвет фона, то удалить его уже не получится
+	//  Р•СЃР»Рё Р±Р»РѕРє СѓР¶Рµ РёРјРµРµС‚ С†РІРµС‚ С„РѕРЅР°, С‚Рѕ СѓРґР°Р»РёС‚СЊ РµРіРѕ СѓР¶Рµ РЅРµ РїРѕР»СѓС‡РёС‚СЃСЏ
 	int nColor = m_arrBoard[row][col];
 	if (nColor == 0)
 		return -1;
-	//	Сначала проверяем, если ли примыкающие блоки с тем же цветом
+	//	РЎРЅР°С‡Р°Р»Р° РїСЂРѕРІРµСЂСЏРµРј, РµСЃР»Рё Р»Рё РїСЂРёРјС‹РєР°СЋС‰РёРµ Р±Р»РѕРєРё СЃ С‚РµРј Р¶Рµ С†РІРµС‚РѕРј
 	 
 	int nCount = -1;
 	if ((row - 1 >= 0 && m_arrBoard[row - 1][col] == nColor) ||
@@ -128,85 +128,85 @@ int CSameGameBoard::DeleteBlocks(int row, int col)
 		(col - 1 >= 0 && m_arrBoard[row][col - 1] == nColor) ||
 		(col + 1 < m_nColumns && m_arrBoard[row][col + 1] == nColor))
 	{
-		//  Затем рекурсивно вызываем функцию, для удаления примыкающих блоков одного цвета...
+		//  Р—Р°С‚РµРј СЂРµРєСѓСЂСЃРёРІРЅРѕ РІС‹Р·С‹РІР°РµРј С„СѓРЅРєС†РёСЋ, РґР»СЏ СѓРґР°Р»РµРЅРёСЏ РїСЂРёРјС‹РєР°СЋС‰РёС… Р±Р»РѕРєРѕРІ РѕРґРЅРѕРіРѕ С†РІРµС‚Р°...
 		
 		m_arrBoard[row][col] = 0;
 		nCount = 1;
-		//  ...сверху...
+		//  ...СЃРІРµСЂС…Сѓ...
 		nCount +=
 			DeleteNeighborBlocks(row - 1, col, nColor, DIRECTION_DOWN);
-		//  ...снизу...
+		//  ...СЃРЅРёР·Сѓ...
 		nCount +=
 			DeleteNeighborBlocks(row + 1, col, nColor, DIRECTION_UP);
-		//  ...слева...
+		//  ...СЃР»РµРІР°...
 		nCount +=
 			DeleteNeighborBlocks(row, col - 1, nColor, DIRECTION_RIGHT);
-		//  ...справа
+		//  ...СЃРїСЂР°РІР°
 		nCount +=
 			DeleteNeighborBlocks(row, col + 1, nColor, DIRECTION_LEFT);
-		//  В конце сжимаем нашу доску
+		//  Р’ РєРѕРЅС†Рµ СЃР¶РёРјР°РµРј РЅР°С€Сѓ РґРѕСЃРєСѓ
 		CompactBoard();
-		//  Вычитаем число удаленных блоков из общего количества
+		//  Р’С‹С‡РёС‚Р°РµРј С‡РёСЃР»Рѕ СѓРґР°Р»РµРЅРЅС‹С… Р±Р»РѕРєРѕРІ РёР· РѕР±С‰РµРіРѕ РєРѕР»РёС‡РµСЃС‚РІР°
 		m_nRemaining -= nCount;
 	}
-	//  Возвращаем количество удаленных блоков
+	//  Р’РѕР·РІСЂР°С‰Р°РµРј РєРѕР»РёС‡РµСЃС‚РІРѕ СѓРґР°Р»РµРЅРЅС‹С… Р±Р»РѕРєРѕРІ
 	return nCount;
 }
 
 int CSameGameBoard::DeleteNeighborBlocks(int row, int col, int color,
 	Direction direction)
 {
-	//  Проверяем на валидность индексы ячейки и столбца
+	//  РџСЂРѕРІРµСЂСЏРµРј РЅР° РІР°Р»РёРґРЅРѕСЃС‚СЊ РёРЅРґРµРєСЃС‹ СЏС‡РµР№РєРё Рё СЃС‚РѕР»Р±С†Р°
 	if (row < 0 || row >= m_nRows || col < 0 || col >= m_nColumns)
 		return 0;
-	//  Проверка на то, что блок имеет тот же цвет
+	//  РџСЂРѕРІРµСЂРєР° РЅР° С‚Рѕ, С‡С‚Рѕ Р±Р»РѕРє РёРјРµРµС‚ С‚РѕС‚ Р¶Рµ С†РІРµС‚
 	if (m_arrBoard[row][col] != color)
 		return 0;
 	int nCount = 1;
 	m_arrBoard[row][col] = 0;
-	//  Если мы пришли НЕ СВЕРХУ, то идем НАВЕРХ...
+	//  Р•СЃР»Рё РјС‹ РїСЂРёС€Р»Рё РќР• РЎР’Р•Р РҐРЈ, С‚Рѕ РёРґРµРј РќРђР’Р•Р РҐ...
 	if (direction != DIRECTION_UP)
 		nCount +=
 		DeleteNeighborBlocks(row - 1, col, color, DIRECTION_DOWN);
-	//  Если мы пришли НЕ СНИЗУ, то спускаемся ВНИЗ...
+	//  Р•СЃР»Рё РјС‹ РїСЂРёС€Р»Рё РќР• РЎРќРР—РЈ, С‚Рѕ СЃРїСѓСЃРєР°РµРјСЃСЏ Р’РќРР—...
 	if (direction != DIRECTION_DOWN)
 		nCount +=
 		DeleteNeighborBlocks(row + 1, col, color, DIRECTION_UP);
-	//  Если мы пришли НЕ СЛЕВА, то идем ВЛЕВО...
+	//  Р•СЃР»Рё РјС‹ РїСЂРёС€Р»Рё РќР• РЎР›Р•Р’Рђ, С‚Рѕ РёРґРµРј Р’Р›Р•Р’Рћ...
 	if (direction != DIRECTION_LEFT)
 		nCount +=
 		DeleteNeighborBlocks(row, col - 1, color, DIRECTION_RIGHT);
-	//  Если мы пришли НЕ СПРАВА, то идем ВПРАВО...
+	//  Р•СЃР»Рё РјС‹ РїСЂРёС€Р»Рё РќР• РЎРџР РђР’Рђ, С‚Рѕ РёРґРµРј Р’РџР РђР’Рћ...
 	if (direction != DIRECTION_RIGHT)
 		nCount +=
 		DeleteNeighborBlocks(row, col + 1, color, DIRECTION_LEFT);
-	//  Возвращаем общее количество удаленных блоков
+	//  Р’РѕР·РІСЂР°С‰Р°РµРј РѕР±С‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СѓРґР°Р»РµРЅРЅС‹С… Р±Р»РѕРєРѕРІ
 	return nCount;
 }
 
 void CSameGameBoard::CompactBoard(void)
 {
-	//  Сначала мы всё сдвигаем вниз
+	//  РЎРЅР°С‡Р°Р»Р° РјС‹ РІСЃС‘ СЃРґРІРёРіР°РµРј РІРЅРёР·
 	for (int col = 0; col < m_nColumns; col++)
 	{
 		int nNextEmptyRow = m_nRows - 1;
 		int nNextOccupiedRow = nNextEmptyRow;
 		while (nNextOccupiedRow >= 0 && nNextEmptyRow >= 0)
 		{
-			//  Сначала мы находим пустую строку
+			//  РЎРЅР°С‡Р°Р»Р° РјС‹ РЅР°С…РѕРґРёРј РїСѓСЃС‚СѓСЋ СЃС‚СЂРѕРєСѓ
 			while (nNextEmptyRow >= 0 &&
 				m_arrBoard[nNextEmptyRow][col] != 0)
 				nNextEmptyRow--;
 			if (nNextEmptyRow >= 0)
 			{
-				//  Затем находим занятую строку, расположенную следом за пустой
+				//  Р—Р°С‚РµРј РЅР°С…РѕРґРёРј Р·Р°РЅСЏС‚СѓСЋ СЃС‚СЂРѕРєСѓ, СЂР°СЃРїРѕР»РѕР¶РµРЅРЅСѓСЋ СЃР»РµРґРѕРј Р·Р° РїСѓСЃС‚РѕР№
 				nNextOccupiedRow = nNextEmptyRow - 1;
 				while (nNextOccupiedRow >= 0 &&
 					m_arrBoard[nNextOccupiedRow][col] == 0)
 					nNextOccupiedRow--;
 				if (nNextOccupiedRow >= 0)
 				{
-					// Теперь перемещаем блоки с занятой строки на пустую 
+					// РўРµРїРµСЂСЊ РїРµСЂРµРјРµС‰Р°РµРј Р±Р»РѕРєРё СЃ Р·Р°РЅСЏС‚РѕР№ СЃС‚СЂРѕРєРё РЅР° РїСѓСЃС‚СѓСЋ 
 					m_arrBoard[nNextEmptyRow][col] =
 						m_arrBoard[nNextOccupiedRow][col];
 					m_arrBoard[nNextOccupiedRow][col] = 0;
@@ -214,25 +214,25 @@ void CSameGameBoard::CompactBoard(void)
 			}
 		}
 	}
-	//  Затем всё, что справа, смещаем влево
+	//  Р—Р°С‚РµРј РІСЃС‘, С‡С‚Рѕ СЃРїСЂР°РІР°, СЃРјРµС‰Р°РµРј РІР»РµРІРѕ
 	int nNextEmptyCol = 0;
 	int nNextOccupiedCol = nNextEmptyCol;
 	while (nNextEmptyCol < m_nColumns && nNextOccupiedCol < m_nColumns)
 	{
-		//  Сначала мы находим пустой столбец
+		//  РЎРЅР°С‡Р°Р»Р° РјС‹ РЅР°С…РѕРґРёРј РїСѓСЃС‚РѕР№ СЃС‚РѕР»Р±РµС†
 		while (nNextEmptyCol < m_nColumns &&
 			m_arrBoard[m_nRows - 1][nNextEmptyCol] != 0)
 			nNextEmptyCol++;
 		if (nNextEmptyCol < m_nColumns)
 		{
-			//  Затем находим занятый столбец, расположенный следом за пустым
+			//  Р—Р°С‚РµРј РЅР°С…РѕРґРёРј Р·Р°РЅСЏС‚С‹Р№ СЃС‚РѕР»Р±РµС†, СЂР°СЃРїРѕР»РѕР¶РµРЅРЅС‹Р№ СЃР»РµРґРѕРј Р·Р° РїСѓСЃС‚С‹Рј
 			nNextOccupiedCol = nNextEmptyCol + 1;
 			while (nNextOccupiedCol < m_nColumns &&
 				m_arrBoard[m_nRows - 1][nNextOccupiedCol] == 0)
 				nNextOccupiedCol++;
 			if (nNextOccupiedCol < m_nColumns)
 			{
-				//  Двигаем весь слобец влево
+				//  Р”РІРёРіР°РµРј РІРµСЃСЊ СЃР»РѕР±РµС† РІР»РµРІРѕ
 				for (int row = 0; row < m_nRows; row++)
 				{
 					m_arrBoard[row][nNextEmptyCol] =
@@ -246,19 +246,19 @@ void CSameGameBoard::CompactBoard(void)
 
 bool CSameGameBoard::IsGameOver(void) const
 {
-	//  Проверяем столбец за столбцом, слева-направо
+	//  РџСЂРѕРІРµСЂСЏРµРј СЃС‚РѕР»Р±РµС† Р·Р° СЃС‚РѕР»Р±С†РѕРј, СЃР»РµРІР°-РЅР°РїСЂР°РІРѕ
 	for (int col = 0; col < m_nColumns; col++)
 	{
-		//  Строку за строкой, снизу-вверх
+		//  РЎС‚СЂРѕРєСѓ Р·Р° СЃС‚СЂРѕРєРѕР№, СЃРЅРёР·Сѓ-РІРІРµСЂС…
 		for (int row = m_nRows - 1; row >= 0; row--)
 		{
 			int nColor = m_arrBoard[row][col];
-			//  Если мы попали на ячейку с цветом фона, значит этот столбец уже уничтожен
+			//  Р•СЃР»Рё РјС‹ РїРѕРїР°Р»Рё РЅР° СЏС‡РµР№РєСѓ СЃ С†РІРµС‚РѕРј С„РѕРЅР°, Р·РЅР°С‡РёС‚ СЌС‚РѕС‚ СЃС‚РѕР»Р±РµС† СѓР¶Рµ СѓРЅРёС‡С‚РѕР¶РµРЅ
 			if (nColor == 0)
 				break;
 			else
 			{
-				//  Проверяем сверху и справа
+				//  РџСЂРѕРІРµСЂСЏРµРј СЃРІРµСЂС…Сѓ Рё СЃРїСЂР°РІР°
 				if (row - 1 >= 0 &&
 					m_arrBoard[row - 1][col] == nColor)
 					return false;
@@ -268,6 +268,6 @@ bool CSameGameBoard::IsGameOver(void) const
 			}
 		}
 	}
-	//  Если примыкающих блоков не обнаружено
+	//  Р•СЃР»Рё РїСЂРёРјС‹РєР°СЋС‰РёС… Р±Р»РѕРєРѕРІ РЅРµ РѕР±РЅР°СЂСѓР¶РµРЅРѕ
 	return true;
 }
